@@ -1,11 +1,19 @@
 import numpy as np
-
+startpoint = 0
 def generatemap():
+    
     map = np.random.randint(0, 2, size=(4, 4))#creates random 4x4 map contains 1s and 0s 
     if validations(map):
-        return map
+        startpoint = find_start_point(map)
+        return map,startpoint
     else:
         return generatemap()
+    
+def find_start_point(map):
+    for i in range(4):
+        if map[0][i] == 1:
+            return i
+    return None
 
 def validations(map): #validates if it is a valid map
     initial = None

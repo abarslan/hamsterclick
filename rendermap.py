@@ -16,6 +16,16 @@ RED = (255, 145, 0)
 ORANGE = (255, 0, 0)
 GREEN = (30, 214, 162)
 
+def save_highest_score(score):
+    try:
+        with open("highest_score.txt", "r") as file:
+            highest_score = int(file.read())
+    except FileNotFoundError:
+        highest_score = 0
+
+    if score > highest_score:
+        with open("highest_score.txt", "w") as file:
+            file.write(str(score))
 
 def startgraphic(map_data, startpoint):
     pygame.init()
@@ -35,6 +45,18 @@ def startgraphic(map_data, startpoint):
     squares_chosen_timer = 0
     total_square = 0
     squares_chosen_timer5 = 0
+
+    # Load images
+    map_image = pygame.image.load('grass.png')
+    player_image = pygame.image.load('player.png')
+    green_square_image = pygame.image.load('green.png')
+    empty_cell_image = pygame.image.load('empty.png')  # Load image for empty cells
+
+    # Resize images to match block size if needed
+    map_image = pygame.transform.scale(map_image, (BLOCK_SIZE, BLOCK_SIZE))
+    player_image = pygame.transform.scale(player_image, (BLOCK_SIZE, BLOCK_SIZE))
+    green_square_image = pygame.transform.scale(green_square_image, (BLOCK_SIZE, BLOCK_SIZE))
+    empty_cell_image = pygame.transform.scale(empty_cell_image, (BLOCK_SIZE, BLOCK_SIZE))
 
     while True:
         current_time = pygame.time.get_ticks()
@@ -83,21 +105,18 @@ def startgraphic(map_data, startpoint):
             for x, cell in enumerate(row):
                 rect = pygame.Rect(x * BLOCK_SIZE, y * BLOCK_SIZE + map_offset_y, BLOCK_SIZE, BLOCK_SIZE)
                 if cell == 1:
-                    pygame.draw.rect(screen, BLUE, rect)
+                    screen.blit(map_image, rect)
                 elif cell == 0:
-                    pygame.draw.rect(screen, WHITE, rect)
-                pygame.draw.rect(screen, BLACK, rect, 3)
+                    screen.blit(empty_cell_image, rect)  # Render image for empty cells
 
         # Draw player
         player_rect = pygame.Rect(player_pos[0] * BLOCK_SIZE, player_pos[1] * BLOCK_SIZE + map_offset_y, BLOCK_SIZE, BLOCK_SIZE)
-        pygame.draw.rect(screen, RED, player_rect)
-        pygame.draw.rect(screen, BLACK, player_rect, 3)
+        screen.blit(player_image, player_rect)
 
         # Draw the randomly chosen square if it exists
         if green_square:
             green_square_rect = pygame.Rect(green_square.x, green_square.y + map_offset_y, BLOCK_SIZE, BLOCK_SIZE)
-            pygame.draw.rect(screen, GREEN, green_square_rect)
-            pygame.draw.rect(screen, BLACK, green_square_rect, 3)
+            screen.blit(green_square_image, green_square_rect)
 
         # Draw counter
         counter_text = font.render("SCORE: " + str(total_square), True, BLACK)
@@ -118,17 +137,15 @@ def startgraphic(map_data, startpoint):
             
         if squares_chosen_timer >= 30000:  # Check if 1 min has passed
             print("TOTAL SCORE:", total_square)
+            save_highest_score(total_square)
             squares_chosen_timer = 0  # Reset the timer
             total_square = 0  # Reset the counter
             game_over = True
-
-        
 
         if game_over:
             game_over_text = fontdied.render('GAME OVER', True, ORANGE)
             game_over_text_rect = game_over_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))  # Centered the text
             screen.blit(game_over_text, game_over_text_rect)
-           
 
         pygame.display.flip()
         clock.tick(30)

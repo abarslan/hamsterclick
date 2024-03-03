@@ -3,8 +3,11 @@ from pygame.locals import *
 import sys
 from createmap import generatemap  # Assuming createmap.py contains the generatemap function
 from rendermap import startgraphic
-
+game_running=1
 # Example usage
-if __name__ == "__main__":
-    map_data, startpoint = generatemap()
-    startgraphic(map_data, startpoint)
+while game_running:
+    if __name__ == "__main__":
+        map_data, startpoint = generatemap()
+        startgraphic(map_data, startpoint)
+        break
+__name__

@@ -135,7 +135,7 @@ def startgraphic(map_data, startpoint):
             squares_chosen = 0  # Reset the counter
 
             
-        if squares_chosen_timer >= 30000:  # Check if 1 min has passed
+        if squares_chosen_timer > 30000:  # Check if 1 min has passed
             print("TOTAL SCORE:", total_square)
             save_highest_score(total_square)
             squares_chosen_timer = 0  # Reset the timer

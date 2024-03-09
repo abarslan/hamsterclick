@@ -1,5 +1,6 @@
 import pygame
 import sys
+
 from pygame.locals import USEREVENT
 from pygame_gui.elements.ui_button import UIButton
 import pygame_gui
@@ -15,7 +16,7 @@ screen_height = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Hamsterclick')
 
-# Create a UIManager object
+
 ui_manager = pygame_gui.UIManager((screen_width, screen_height))
 
 # Function to start the game
@@ -62,6 +63,7 @@ highest_score_button = UIButton(relative_rect=pygame.Rect((300, 500), (200, 50))
 # Game loop
 clock = pygame.time.Clock()
 game_running = True
+
 while game_running:
     time_delta = clock.tick(60) / 1000.0
     for event in pygame.event.get():
@@ -81,7 +83,7 @@ while game_running:
 
     scaled_image = pygame.transform.scale(green_square_image, (screen_width, screen_height))
 
-    # Draw the scaled image
+    
     screen.blit(scaled_image, (0, 0))
 
     ui_manager.draw_ui(screen)

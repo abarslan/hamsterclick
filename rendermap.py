@@ -7,7 +7,6 @@ import random
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 860
 BLOCK_SIZE = 200
-FRAME_THICKNESS = 3
 # Colors
 WHITE = (255, 255, 255)
 BLUE = (93, 71, 237)
@@ -29,12 +28,12 @@ def save_highest_score(score):
 
 def startgraphic(map_data, startpoint):
     pygame.init()
-    
+
     font_path = 'newfont.ttf'
     font = pygame.font.Font(font_path, 24)
     fontdied = pygame.font.Font(font_path, 50)
     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-    pygame.display.set_caption('Render Map')
+    pygame.display.set_caption('Hamsterclick')
     clock = pygame.time.Clock()
 
     player_pos = [startpoint, 0]
@@ -146,6 +145,8 @@ def startgraphic(map_data, startpoint):
             game_over_text = fontdied.render('GAME OVER', True, ORANGE)
             game_over_text_rect = game_over_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))  # Centered the text
             screen.blit(game_over_text, game_over_text_rect)
+            return total_square
+           
 
         pygame.display.flip()
         clock.tick(30)

@@ -69,7 +69,7 @@ while game_running:
             game_running = False
 
         if event.type == USEREVENT:
-            if event.type == pygame_gui.UI_BUTTON_PRESSED:
+            if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == start_button:
                     start_game()
                 elif event.ui_element == quit_button:

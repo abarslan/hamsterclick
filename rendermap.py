@@ -68,7 +68,6 @@ def startgraphic(map_data, startpoint):
                 sys.exit()
             elif event.type == MOUSEBUTTONDOWN and not game_over:
                 x, y = pygame.mouse.get_pos()
-                # Adjust mouse coordinates for the gold rectangle
                 y -= 60
                 clicked_column = x // BLOCK_SIZE
                 clicked_row = y // BLOCK_SIZE
@@ -77,7 +76,6 @@ def startgraphic(map_data, startpoint):
                         game_over = True
                     elif green_square and green_square.collidepoint(x, y):
                         if current_time - last_green_time <= 1000:
-                            # Clicked on the green square within 1 second
                             player_pos = [clicked_column, clicked_row]
                             green_square = None
                             total_square += 1  # Increment the counter
@@ -92,12 +90,12 @@ def startgraphic(map_data, startpoint):
                 green_square = pygame.Rect(random_column * BLOCK_SIZE, random_row * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE)
             last_green_time = current_time
 
-        # Draw gold background for counters
-        gold_rect_height = 60  # Adjust the height of the gold rectangle
+       
+        gold_rect_height = 60  
         gold_rect = pygame.Rect(0, 0, WINDOW_WIDTH, gold_rect_height)
-        gold_surface = pygame.Surface((WINDOW_WIDTH, gold_rect_height), pygame.SRCALPHA)  # Create a surface with alpha channel
-        gold_surface.fill((148, 138, 0,170))  # Fill the surface with gold color and set transparency (128 is half opaque)
-        screen.blit(gold_surface, (0, 0))  # Blit the gold surface onto the screen
+        gold_surface = pygame.Surface((WINDOW_WIDTH, gold_rect_height), pygame.SRCALPHA)  
+        gold_surface.fill((148, 138, 0,170))  
+        screen.blit(gold_surface, (0, 0)) 
         
         # Draw the map
         map_offset_y = gold_rect_height  # Adjusted Y coordinate for the map
@@ -150,6 +148,3 @@ def startgraphic(map_data, startpoint):
         pygame.display.flip()
         clock.tick(30)
 
-# Example usage
-# Assuming map_data and startpoint are initialized somewhere before calling startgraphic
-# startgraphic(map_data, startpoint)
